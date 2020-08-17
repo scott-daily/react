@@ -6,7 +6,7 @@ function SimpleCounter() {
     return (
         <div>
             <h1>
-                {count}
+                Count: {count}
             </h1>
             <h1 onClick={() => setCount(count + 1)}>
                 +

@@ -1,11 +1,16 @@
 import React from 'react';
 import SimpleCounter from "./Components/SimpleCounter"
-import './App.css';
+import Header from "./Components/Header"
+import Footer from "./Components/Footer"
 
 function App() {
   return (
     <div>
+      <Header />
+
       <SimpleCounter />
+
+      <Footer />
     </div>
   );
 }
