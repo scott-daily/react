@@ -8,12 +8,12 @@ function SimpleCounter() {
             <h1>
                 Count: {count}
             </h1>
-            <h1 onClick={() => setCount(count + 1)}>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded" onClick={() => setCount(count + 1)}>
                 +
-            </h1>
-            <h1 onClick={() => setCount(count - 1)}>
+            </button>
+            <button class="bg-red-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded" onClick={() => setCount(count - 1)}>
                 -
-            </h1>
+            </button>
         </div>
     )
 }
