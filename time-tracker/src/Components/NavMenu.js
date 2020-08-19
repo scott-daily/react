@@ -17,6 +17,17 @@ function NavMenu(props) {
                         Home
                     </Link>
                 </li>
+
+                <li>
+                    <Link 
+                        to="/weather" 
+                        className="text-blue-500 py-3 border-b block text-center"
+                        onClick={props.closeMenu}
+                        >
+                            Weather
+                    </Link>
+                </li>
+
                 <li>
                     <Link 
                         to="/about" 
