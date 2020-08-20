@@ -42,13 +42,11 @@ function Weather() {
                     <label>Enter an address to get the weather history
                         <input 
                             type = "text" 
-                            placeholder={"Enter a complete address"} 
                             name="address"
-                            //onChange={e => setAddress(e.target.value)} 
+                            placeholder={"Enter a complete address"} 
                         />
                     </label>
-                    <input type="submit" value="Submit"
-                    /*onClick={e => setAddress(e.target.value)}*/ />
+                    <input type="submit" value="Submit"></input>
                 </form>
         </div>
     )
