@@ -9,21 +9,27 @@ function Weather() {
 
     const handleAddressSubmit = (event) => {
         event.preventDefault();
-        alert(`Submitting Address ${address}`)
-        setAddress({address})
+        setAddress(event.target[0].value)
     }
 
-    let geocodeURL = `https://geocode.xyz/${address}?json=1`
+    useEffect(() => {
+        if (address !== "") {
+            let geocodeURL = `https://geocode.xyz/${address}?json=1`
 
-        useEffect(() => {
             axios.get(geocodeURL)
                 .then(response => {
-                    setLon(response.longt)
-                    console.log(response)
-                    setLat(response.latt)
-                })
+                    setLon(parseFloat(response.data.longt))
+                    setLat(parseFloat(response.data.latt))
+                }, (error) => {
+                    console.log(error)
+                })}
             }, [address])
 
+        if (lon !== "" && lat !== "") {
+            console.log(lon)
+            console.log(lat)
+        }
+            
     //useEffect(() =>  {
     //    axios.get()
     //}
@@ -37,17 +43,13 @@ function Weather() {
                         <input 
                             type = "text" 
                             placeholder={"Enter a complete address"} 
-                            type="text"
-                            value = {address}
-                            onChange={e => setAddress(e.target.value)} 
+                            name="address"
+                            //onChange={e => setAddress(e.target.value)} 
                         />
                     </label>
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Submit"
+                    /*onClick={e => setAddress(e.target.value)}*/ />
                 </form>
-
-                <div>
-                    The address is: {address}
-                </div>
         </div>
     )
 }
