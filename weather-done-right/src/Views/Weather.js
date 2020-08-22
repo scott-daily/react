@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import Loader from '../Components/Loader'
 
 function Weather() {    
 
-    const [address, setAddress] = useState("")
-    const [totalRainfall, setTotalRainfall] = useState('')
+    const [address, setAddress] = useState('')
+    const [precip, setPrecip] = useState('')
+    const [snowFall, setSnowFall] = useState('')
+    const [averageTemp, setAverageTemp] = useState('')
+    const [minTemp, setMinTemp] = useState('')
+    const [maxTemp, setMaxTemp] = useState('')
+    const [windDirect, setWindDirect] = useState('')
+    const [windSpeed, setWindSpeed] = useState('')
+    const [weatherCode, setWeatherCode] = useState('')
     const [loading, setLoading] = useState(false)
     let weatherReport = <div></div>
 
@@ -23,33 +31,21 @@ function Weather() {
                     let lon = response.data.longt
                     let lat = response.data.latt
                     return axios({
-                        url: `https://api.meteostat.net/v2/point/hourly?lat=${lat}&lon=${lon}&alt=104&start=2020-05-19&end=2020-05-19`,
+                        url: `https://api.meteostat.net/v2/point/daily?lat=${lat}&lon=${lon}&alt=104&start=2020-05-19&end=2020-05-19`,
                         method: 'get',
                         headers: { "x-api-key":"TyVVxAqt4FNYXF99SjBD1CS8wYDI24rS" }
                       }).then(res => {
-                        console.log(`Axios Call completed: ${res}`)
-                        console.log("Hourly Precipitation in mm: " + res.data.data[13].prcp)
-                        console.log("Hourly Temperature in celcius: " + res.data.data[13].temp)
-                        console.log("Relative Humidity percent: " + res.data.data[13].rhum)
-                        console.log("wind direction in degrees: " + res.data.data[13].wdir)
-                        console.log("average wind speed in km/h: " + res.data.data[13].wspd)
-                        console.log("weather code: " + res.data.data[13].coco)
+                        setPrecip(res.data.data[0].prcp)
+                        setSnowFall(res.data.data[0].snow)
+                        setAverageTemp(res.data.data[0].tavg)
+                        setMinTemp(res.data.data[0].tmin)
+                        setMaxTemp(res.data.data[0].tmax)
+                        setWindDirect(res.data.data[0].wdir)
+                        setWindSpeed(res.data.data[0].wspd)
+                        setWeatherCode(res.data.data[0].coco)
 
-                        let totalPrecip = 0
-                        let precipNull = false
-                        for (let i = 0; i < 24; i++) {
-                            if (res.data.data[i].prcp != null) {
-                                totalPrecip += res.data.data[i].prcp;
-                            } else {
-                                precipNull = true
-                            }
-                        }
                         setLoading(false)
-                        if (!precipNull) {
-                            setTotalRainfall(totalPrecip)
-                        } else {
-                            setTotalRainfall('No data available for this date.')
-                        }
+
                       })
                 }, (error) => {
                     console.log(error)
@@ -57,19 +53,25 @@ function Weather() {
             }, [address])
 
             if (loading) {
-                weatherReport = <p className="ml-10">...loading weather report</p>
+                weatherReport = <Loader></Loader>
             }
             else {
                 weatherReport =
-                <div className="ml-5">
-                    Total Rainfall in mm on 2020-05-19: <b>{totalRainfall}</b>
+                <div className="ml-8 max-w-sm rounded shadow-sm">
+                    <div className="border shadow-md">Precipitation (mm): <b>{precip}</b></div>
+                    <div className="border shadow-md">Snowfall (mm): <b>{snowFall}</b></div>
+                    <div className="border shadow-md">Average Temperature (c): <b>{averageTemp}</b></div>
+                    <div className="border shadow-md">Minimum Temperature (c): <b>{minTemp}</b></div>
+                    <div className="border shadow-md">Maximum Temperature (c): <b>{maxTemp}</b></div>
+                    <div className="border shadow-md">Average Wind Direction (degrees): <b>{windDirect}</b></div>
+                    <div className="border shadow-md">Average Wind Speed (km/h): <b>{windSpeed}</b></div>
                 </div> 
             }
         
 
     return (
         <div>
-            <h1 className="mb-4 text-lg ml-8">Historical Weather Info </h1>
+            <h1 className="mb-4 text-lg ml-8">Daily Historical Weather </h1>
                 <form onSubmit={handleAddressSubmit}
                     className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     <label className="mr-2 pl-1 block text-gray-700 text-md font-bold mb-2">Enter a location</label>
