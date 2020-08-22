@@ -5,6 +5,8 @@ import Loader from '../Components/Loader'
 function Weather() {    
 
     const [address, setAddress] = useState('')
+    const [date, setDate] = useState('')
+
     const [precip, setPrecip] = useState('')
     const [snowFall, setSnowFall] = useState('')
     const [averageTemp, setAverageTemp] = useState('')
@@ -14,12 +16,14 @@ function Weather() {
     const [windSpeed, setWindSpeed] = useState('')
     const [weatherCode, setWeatherCode] = useState('')
     const [loading, setLoading] = useState(false)
+    const [submitted, setSubmitted] = useState(false)
     let weatherReport = <div></div>
 
-    const handleAddressSubmit = (event) => {
+    const handleFormSubmit = (event) => {
         event.preventDefault();
         setLoading(true)
         setAddress(event.target[0].value)
+        setDate(event.target[1].value)
     }
 
     useEffect(() => {
@@ -31,7 +35,7 @@ function Weather() {
                     let lon = response.data.longt
                     let lat = response.data.latt
                     return axios({
-                        url: `https://api.meteostat.net/v2/point/daily?lat=${lat}&lon=${lon}&alt=104&start=2020-05-19&end=2020-05-19`,
+                        url: `https://api.meteostat.net/v2/point/daily?lat=${lat}&lon=${lon}&alt=104&start=${date}&end=${date}`,
                         method: 'get',
                         headers: { "x-api-key":"TyVVxAqt4FNYXF99SjBD1CS8wYDI24rS" }
                       }).then(res => {
@@ -45,17 +49,18 @@ function Weather() {
                         setWeatherCode(res.data.data[0].coco)
 
                         setLoading(false)
+                        setSubmitted(true)
 
                       })
                 }, (error) => {
                     console.log(error)
                 })}
-            }, [address])
+            }, [address, date])
 
             if (loading) {
                 weatherReport = <Loader></Loader>
             }
-            else {
+            else if (submitted)  {
                 weatherReport =
                 <div className="ml-8 max-w-sm rounded shadow-sm">
                     <div className="border shadow-md">Precipitation (mm): <b>{precip}</b></div>
@@ -72,18 +77,27 @@ function Weather() {
     return (
         <div>
             <h1 className="mb-4 text-lg ml-8">Daily Historical Weather </h1>
-                <form onSubmit={handleAddressSubmit}
+                <form onSubmit={handleFormSubmit}
                     className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                    <label className="mr-2 pl-1 block text-gray-700 text-md font-bold mb-2">Enter a location</label>
+                    <label className="mr-2 pl-1 block text-gray-700 text-md font-bold mb-2">Enter the location</label>
                         <input 
                             type = "text" 
                             name="address"
                             placeholder={"Location"}
                             className="shadow appearance-none border rounded py-2 px-3 text-md text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                         />
+                        <div>
+                            <label className="mr-2 mt-2 pl-1 block text-gray-700 text-md font-bold mb-2">Enter the date</label>
+                                <input 
+                                    type = "text" 
+                                    name="date"
+                                    placeholder={"YYYY-MM-DD"}
+                                    className="shadow appearance-none border rounded py-2 px-3 text-md text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                />
+                        </div>
                     <input type="submit" 
                         value="Submit" 
-                        className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+                        className="cursor-pointer bg-blue-500 mt-3 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
                         >
                     </input>
                 </form>
