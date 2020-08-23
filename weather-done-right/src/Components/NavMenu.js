@@ -5,7 +5,7 @@ function NavMenu(props) {
     return (
         <div>
             <div className="font-bold py-3 text-center">
-                Time Tracker
+                Weather Done Right
             </div>
             <ul>
                 <li>
