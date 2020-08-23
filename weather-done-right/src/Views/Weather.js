@@ -26,6 +26,12 @@ function Weather() {
         setDate(event.target[1].value)
     }
 
+    function degreeToCompass(num) {
+        var val = Math.floor((num / 22.5) + 0.5);
+        var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+        return arr[(val % 16)];
+    }
+
     useEffect(() => {
         if (address !== "") {
             let geocodeURL = `https://geocode.xyz/${address}?json=1`
@@ -44,8 +50,8 @@ function Weather() {
                         setAverageTemp(((res.data.data[0].tavg * (9/5)) + 32).toFixed(2))
                         setMinTemp(((res.data.data[0].tmin * (9/5)) + 32).toFixed(2))
                         setMaxTemp(((res.data.data[0].tmax * (9/5)) + 32).toFixed(2))
-                        setWindDirect(res.data.data[0].wdir)
-                        setWindSpeed(res.data.data[0].wspd)
+                        setWindDirect(degreeToCompass(res.data.data[0].wdir))
+                        setWindSpeed((res.data.data[0].wspd / 1.609).toFixed(2))
                         //setWeatherCode(res.data.data[0].coco)
 
                         setLoading(false)
@@ -63,13 +69,13 @@ function Weather() {
             else if (submitted)  {
                 weatherReport =
                 <div className="ml-8 max-w-sm rounded shadow-sm">
-                    <div className="border shadow-md">Precipitation (inches): <b>{precip}</b></div>
-                    <div className="border shadow-md">Snowfall (inches): <b>{snowFall}</b></div>
-                    <div className="border shadow-md">Average Temperature (f): <b>{averageTemp}</b></div>
-                    <div className="border shadow-md">Minimum Temperature (f): <b>{minTemp}</b></div>
-                    <div className="border shadow-md">Maximum Temperature (f): <b>{maxTemp}</b></div>
-                    <div className="border shadow-md">Average Wind Direction (degrees): <b>{windDirect}</b></div>
-                    <div className="border shadow-md">Average Wind Speed (km/h): <b>{windSpeed}</b></div>
+                    <div className="border shadow-sm pl-2 my-2">Precipitation (in): <b>{precip}</b></div>
+                    <div className="border shadow-sm pl-2 my-2">Snowfall (in): <b>{snowFall}</b></div>
+                    <div className="border shadow-sm pl-2 my-2">Average Temperature (f): <b>{averageTemp}</b></div>
+                    <div className="border shadow-sm pl-2 my-2">Minimum Temperature (f): <b>{minTemp}</b></div>
+                    <div className="border shadow-sm pl-2 my-2">Maximum Temperature (f): <b>{maxTemp}</b></div>
+                    <div className="border shadow-sm pl-2 my-2">Average Wind Direction: <b>{windDirect}</b></div>
+                    <div className="border shadow-sm pl-2 my-2">Average Wind Speed (mp/h): <b>{windSpeed}</b></div>
                 </div> 
             }
         
@@ -97,7 +103,7 @@ function Weather() {
                         </div>
                     <input type="submit" 
                         value="Submit" 
-                        className="cursor-pointer bg-blue-500 mt-3 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+                        className="cursor-pointer bg-blue-500 mt-3 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-5"
                         >
                     </input>
                 </form>
