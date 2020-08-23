@@ -14,7 +14,7 @@ function Weather() {
     const [maxTemp, setMaxTemp] = useState('')
     const [windDirect, setWindDirect] = useState('')
     const [windSpeed, setWindSpeed] = useState('')
-    const [weatherCode, setWeatherCode] = useState('')
+    //const [weatherCode, setWeatherCode] = useState('')
     const [loading, setLoading] = useState(false)
     const [submitted, setSubmitted] = useState(false)
     let weatherReport = <div></div>
@@ -39,14 +39,14 @@ function Weather() {
                         method: 'get',
                         headers: { "x-api-key":"TyVVxAqt4FNYXF99SjBD1CS8wYDI24rS" }
                       }).then(res => {
-                        setPrecip(res.data.data[0].prcp)
-                        setSnowFall(res.data.data[0].snow)
-                        setAverageTemp(res.data.data[0].tavg)
-                        setMinTemp(res.data.data[0].tmin)
-                        setMaxTemp(res.data.data[0].tmax)
+                        setPrecip((res.data.data[0].prcp / 25.4).toFixed(2))
+                        setSnowFall((res.data.data[0].snow / 25.4).toFixed(2))
+                        setAverageTemp(((res.data.data[0].tavg * (9/5)) + 32).toFixed(2))
+                        setMinTemp(((res.data.data[0].tmin * (9/5)) + 32).toFixed(2))
+                        setMaxTemp(((res.data.data[0].tmax * (9/5)) + 32).toFixed(2))
                         setWindDirect(res.data.data[0].wdir)
                         setWindSpeed(res.data.data[0].wspd)
-                        setWeatherCode(res.data.data[0].coco)
+                        //setWeatherCode(res.data.data[0].coco)
 
                         setLoading(false)
                         setSubmitted(true)
@@ -63,11 +63,11 @@ function Weather() {
             else if (submitted)  {
                 weatherReport =
                 <div className="ml-8 max-w-sm rounded shadow-sm">
-                    <div className="border shadow-md">Precipitation (mm): <b>{precip}</b></div>
-                    <div className="border shadow-md">Snowfall (mm): <b>{snowFall}</b></div>
-                    <div className="border shadow-md">Average Temperature (c): <b>{averageTemp}</b></div>
-                    <div className="border shadow-md">Minimum Temperature (c): <b>{minTemp}</b></div>
-                    <div className="border shadow-md">Maximum Temperature (c): <b>{maxTemp}</b></div>
+                    <div className="border shadow-md">Precipitation (inches): <b>{precip}</b></div>
+                    <div className="border shadow-md">Snowfall (inches): <b>{snowFall}</b></div>
+                    <div className="border shadow-md">Average Temperature (f): <b>{averageTemp}</b></div>
+                    <div className="border shadow-md">Minimum Temperature (f): <b>{minTemp}</b></div>
+                    <div className="border shadow-md">Maximum Temperature (f): <b>{maxTemp}</b></div>
                     <div className="border shadow-md">Average Wind Direction (degrees): <b>{windDirect}</b></div>
                     <div className="border shadow-md">Average Wind Speed (km/h): <b>{windSpeed}</b></div>
                 </div> 
