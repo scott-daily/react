@@ -1,15 +1,21 @@
-// Import the React & ReactDOM libraries
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SeasonDisplay from './SeasonDisplay'
 
-// Create a react component
+
 const App = () => {
-    return <div>Hello</div>;
+
+    window.navigator.geolocation.getCurrentPosition(
+        (position) => console.log(position.coords.latitude),
+        (error) => console.log(error)
+    );
+
+    return (
+        <div>
+            
+            <SeasonDisplay/>
+        </div>
+    );
 };
 
-// Take the react component and display on screen
-
-ReactDOM.render(
-    <App />,
-    document.querySelector('#root')
-);
+ReactDOM.render(<App />, document.querySelector('#root'));

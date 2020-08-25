@@ -19,6 +19,11 @@ function Weather() {
     const [submitted, setSubmitted] = useState(false);
     let weatherReport = <div></div>;
 
+    window.navigator.geolocation.getCurrentPosition(
+        (position) => console.log(position.coords.latitude),
+        (error) => console.log(error)
+    );
+
     const handleFormSubmit = (event) => {
         event.preventDefault();
         setLoading(true);
