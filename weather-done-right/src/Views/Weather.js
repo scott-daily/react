@@ -20,7 +20,7 @@ function Weather() {
     let weatherReport = <div></div>;
 
     window.navigator.geolocation.getCurrentPosition(
-        (position) => console.log(position.coords.latitude),
+        (position) => {let lat = position.coords.latitude},
         (error) => console.log(error)
     );
 
