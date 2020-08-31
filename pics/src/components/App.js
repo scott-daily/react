@@ -11,7 +11,7 @@ class App extends React.Component {
                 params: { query: term }
             });
 
-            this.setState( {images: response.data.results});
+            this.setState( {images: response.data.results} );
     };
 
     render() {

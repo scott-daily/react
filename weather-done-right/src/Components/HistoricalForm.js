@@ -2,9 +2,11 @@ import React from 'react';
 
 
 
-const HistoricalForm =({ handleFormSubmit}) => {
+const HistoricalForm = (props) => {
+
+
     return (
-        <form onSubmit={handleFormSubmit}
+        <form onSubmit={props.handleFormSubmit}
             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <label className="mr-2 pl-1 block text-gray-700 text-md font-bold mb-2">Enter the location</label>
                 <input 
