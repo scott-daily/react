@@ -12,6 +12,10 @@ class App extends React.Component {
         selectedVideo: null
     };
 
+    componentDidMount() {
+        this.onSearchSubmit('news');
+    }
+
     onSearchSubmit = async (term) => {
         const response = await youtube.get('/search', {
              params: { q: term }
