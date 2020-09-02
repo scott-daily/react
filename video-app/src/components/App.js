@@ -13,7 +13,7 @@ class App extends React.Component {
     };
 
     componentDidMount() {
-        this.onSearchSubmit('news');
+        this.onSearchSubmit('react js');
     }
 
     onSearchSubmit = async (term) => {
@@ -27,7 +27,6 @@ class App extends React.Component {
     onVideoSelect = (video) => {
         this.setState({selectedVideo: video});
     }
-
 
     render() {
         if (window.matchMedia("(max-width: 700px)").matches) {
