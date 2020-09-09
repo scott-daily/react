@@ -1,30 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import SearchBar from './SearchBar';
 import VideoDetail from './VideoDetail';
 import VideoList from './VideoList';
 import youtube from '../apis/youtube'
 
 
-const App = () => {
+class App extends React.Component {
 
-    const [videos, setVideos] = useState([]);
-    const [selectedVideo, setSelectedVideo] = useState(null);
+    state = {
+        videos: [],
+        selectedVideo: null
+    };
 
-    useEffect(() => {
-        onSearchSubmit('react js');
-    }, []);
+    componentDidMount() {
+        this.onSearchSubmit('react js');
+    }
 
     onSearchSubmit = async (term) => {
         const response = await youtube.get('/search', {
              params: { q: term }
          });
 
-         setVideos(response.data.items) 
-         setSelectedVideo(response.data.items[0]);
-    };
+         this.setState( {videos: response.data.items, selectedVideo: response.data.items[0]} );
+ };
 
     onVideoSelect = (video) => {
-        setSelectedVideo(video);
+        this.setState({selectedVideo: video});
     }
 
     render() {

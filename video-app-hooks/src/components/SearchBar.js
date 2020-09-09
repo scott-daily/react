@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const SearchBar = ({onFormSubmit}) => {
+class SearchBar extends React.Component {
 
-    const [term, setTerm] = useState('');
+    state = {term: ''};
 
     onSearchSubmit = event => {
-        setTerm(event.target.value)
+        event.preventDefault();
+        this.props.onFormSubmit(this.state.term);
     }
 
     render() {
@@ -16,8 +17,8 @@ const SearchBar = ({onFormSubmit}) => {
                         <label>Video Search</label>
                             <input 
                                 type="text"
-                                value={term}
-                                onChange={onSearchSubmit}
+                                value={this.state.term}
+                                onChange={(e) => this.setState({term: e.target.value})}
                             />
                     </div>
                 </form>
