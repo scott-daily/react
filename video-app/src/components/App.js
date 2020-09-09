@@ -3,6 +3,7 @@ import SearchBar from './SearchBar';
 import VideoDetail from './VideoDetail';
 import VideoList from './VideoList';
 import youtube from '../apis/youtube'
+import { render } from '@testing-library/react';
 
 
 const App = () => {
@@ -14,7 +15,7 @@ const App = () => {
         onSearchSubmit('react js');
     }, []);
 
-    onSearchSubmit = async (term) => {
+    const onSearchSubmit = async (term) => {
         const response = await youtube.get('/search', {
              params: { q: term }
          });
@@ -23,30 +24,30 @@ const App = () => {
          setSelectedVideo(response.data.items[0]);
     };
 
-    onVideoSelect = (video) => {
+    const onVideoSelect = (video) => {
         setSelectedVideo(video);
-    }
+    } 
 
-    render() {
+     render()
         if (window.matchMedia("(max-width: 700px)").matches) {
             return (
                 <div className="ui container">
-                    <SearchBar onFormSubmit={this.onSearchSubmit}/>
-                    <VideoDetail video={this.state.selectedVideo} />
-                    <VideoList onVideoSelect={this.onVideoSelect} videos={this.state.videos} />
+                    <SearchBar onFormSubmit={onSearchSubmit}/>
+                    <VideoDetail video={selectedVideo} />
+                    <VideoList onVideoSelect={onVideoSelect} videos={videos} />
                 </div>
             )
         } else {
             return (
                 <div className="ui container">
-                    <SearchBar onFormSubmit={this.onSearchSubmit}/>
+                    <SearchBar onFormSubmit={onSearchSubmit}/>
                     <div className="ui grid">
                         <div className="ui row">
                             <div className="eleven wide column">
-                                <VideoDetail video={this.state.selectedVideo} />
+                                <VideoDetail video={selectedVideo} />
                             </div>
                             <div className="five wide column">
-                                <VideoList onVideoSelect={this.onVideoSelect} videos={this.state.videos} />
+                                <VideoList onVideoSelect={onVideoSelect} videos={videos} />
                             </div>
                         </div>
                     </div>
@@ -54,7 +55,6 @@ const App = () => {
             )
         }
     }
-}
 
 export default App;
 
