@@ -6,8 +6,10 @@ const Dropdown = (props) => {
 
     useEffect(() => {
         document.body.addEventListener('click', (event) => {
-            if (ref.current.contains(event.target)) {
-                return;
+            if (ref.current !== null) {
+                if (ref.current.contains(event.target)) {
+                    return;
+                }
             }
             
             setOpen(false);
@@ -34,7 +36,7 @@ const Dropdown = (props) => {
         <div ref={ref} className="ui segment">
             <div className="ui form">
                 <div className="field">
-                    <label className="label">{props.dropdownLabel}</label>
+                    <label className="label">{props.label}</label>
                         <div onClick={() => setOpen(!open)} className={`ui selection dropdown ${open ? 'visible active' : ''}`}>
                             <i className="dropdown icon"></i>
                             <div className="text">{props.selected.label}</div>
