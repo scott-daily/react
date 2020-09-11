@@ -3,8 +3,6 @@ import SearchBar from './SearchBar';
 import VideoDetail from './VideoDetail';
 import VideoList from './VideoList';
 import useVideos from '../hooks/useVideos';
-import { render } from '@testing-library/react';
-
 
 const App = () => {
 
@@ -14,7 +12,6 @@ const App = () => {
     useEffect(() => {
         setSelectedVideo(videos[0]);
     }, [videos]);
-
 
     if (window.matchMedia("(max-width: 700px)").matches) {
         return (
