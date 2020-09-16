@@ -14,6 +14,7 @@ const SongDetail = ({selectedSong}) => {
             </div>
         )
     }
+    
     return <div>Select a Song</div>
 };
 
