@@ -3,7 +3,7 @@ import jsonPlaceholder from '../apis/jsonPlaceholder';
 
 export const fetchPostsAndUsers = () => async (dispatch, getState) => {
     await dispatch(fetchPosts());
-    
+
         _.chain(getState().posts)
             .map('userId')
             .uniq()
@@ -11,7 +11,8 @@ export const fetchPostsAndUsers = () => async (dispatch, getState) => {
             .value();
 };
 
-
+// Using redux thunk on the createStore allows action creators to 
+// return a function that can contain the arguments of dispatch & getState   
 export const fetchPosts =  () => {
     return async (dispatch) => {
         const response = await jsonPlaceholder.get('/posts');
