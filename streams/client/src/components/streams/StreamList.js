@@ -41,9 +41,7 @@ class StreamList extends React.Component {
     };
 
     renderCreateButton() {
-        console.log("what");
         if (this.props.isSignedIn) {
-            console.log("true");
             return (
                 <div style={{ textAlign: 'right'}}>
                     <Link to="/streams/new" className="ui button primary">
